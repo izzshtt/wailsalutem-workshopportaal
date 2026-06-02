@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Aanmelding bevestigd{% endblock %}
+
+{% block content %}
+<div class="bevestiging-pagina">
+
+    <div class="bevestiging-icoon">✅</div>
+
+    <h1 class="bevestiging-titel">Aanmelding ontvangen!</h1>
+    <p class="bevestiging-subtitel">
+        Bedankt voor je aanmelding. We nemen zo snel 
+        mogelijk contact met je op.
+    </p>
+
+    <div class="bevestiging-kaart">
+        <h2 class="bevestiging-kaart-titel">Jouw aanmelding</h2>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">Workshop</span>
+            <span class="bevestiging-waarde">{{ aanmelding.workshop.name }}</span>
+        </div>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">Datum</span>
+            <span class="bevestiging-waarde">{{ aanmelding.workshop.date }}</span>
+        </div>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">Locatie</span>
+            <span class="bevestiging-waarde">{{ aanmelding.workshop.location }}</span>
+        </div>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">Naam kind</span>
+            <span class="bevestiging-waarde">{{ aanmelding.child_name }}</span>
+        </div>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">Naam ouder</span>
+            <span class="bevestiging-waarde">{{ aanmelding.parent_name }}</span>
+        </div>
+
+        <div class="bevestiging-rij">
+            <span class="bevestiging-label">E-mailadres</span>
+            <span class="bevestiging-waarde">{{ aanmelding.email }}</span>
+        </div>
+    </div>
+
+    <div class="bevestiging-knoppen">
+        <a href="{{ url_for('publiek.catalogus') }}" class="btn-terug-catalogus">
+            ← Terug naar catalogus
+        </a>
+    </div>
+
+</div>
+{% endblock %}

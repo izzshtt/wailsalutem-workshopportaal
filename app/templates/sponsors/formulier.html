@@ -1,0 +1,69 @@
+{% extends 'admin_base.html' %}
+{% block title %}{{ titel }} — WailSalutem{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>{{ titel }}</h1>
+  <a href="{{ url_for('sponsors.overzicht') }}" class="btn btn-outline">&larr; Terug</a>
+</header>
+
+<section class="card form-card">
+  <form method="POST" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="naam">Naam <span style="color:#e53e3e;">*</span></label>
+        <input
+          type="text"
+          id="naam"
+          name="naam"
+          class="form-control"
+          placeholder="Bijv. Rabobank Amstel en Vecht"
+          value="{{ sponsor.naam if sponsor else '' }}"
+          required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="website_url">Website URL</label>
+        <input
+          type="url"
+          id="website_url"
+          name="website_url"
+          class="form-control"
+          placeholder="https://www.voorbeeld.nl"
+          value="{{ sponsor.website_url if sponsor else '' }}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="logo">Logo afbeelding</label>
+        {% if sponsor and sponsor.logo_bestandsnaam %}
+        <div style="margin-bottom:.75rem;">
+          <img
+            src="{{ url_for('static', filename='images/' + sponsor.logo_bestandsnaam) }}"
+            alt="{{ sponsor.naam }}"
+            style="height:50px; width:auto; object-fit:contain; border:1px solid #e8edf3; border-radius:8px; padding:6px;">
+          <p class="form-hint">Huidig logo — upload een nieuw bestand om het te vervangen.</p>
+        </div>
+        {% endif %}
+        <input
+          type="file"
+          id="logo"
+          name="logo"
+          class="form-control"
+          accept=".png,.jpg,.jpeg,.svg,.webp,.gif">
+        <span class="form-hint">Toegestaan: PNG, JPG, SVG, WEBP, GIF</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Opslaan</button>
+      <a href="{{ url_for('sponsors.overzicht') }}" class="btn btn-outline">Annuleren</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

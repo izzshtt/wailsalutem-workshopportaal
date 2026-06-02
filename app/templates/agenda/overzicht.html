@@ -1,0 +1,86 @@
+{% extends 'admin_base.html' %}
+{% block title %}Agenda — WailSalutem{% endblock %}
+{% block admin_icon %}🗓️{% endblock %}
+{% block admin_title %}Agenda{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Agenda</h1>
+</header>
+
+<section class="agenda-section">
+  <h2 class="agenda-section__title">
+    <span class="badge badge--gepland">Gepland</span>
+    Aankomende workshops
+  </h2>
+  {% for workshop in gepland %}
+  <div class="agenda-kaart">
+    <div class="agenda-kaart-header">
+      <span class="agenda-datum">{{ workshop.date.strftime('%d-%m-%Y') }}</span>
+      <span class="badge-gepland">Gepland</span>
+    </div>
+    <h3 class="agenda-naam">{{ workshop.name }}</h3>
+    <div class="agenda-info-rij">
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Tijd</span>
+        <span class="agenda-info-waarde">{{ workshop.start_time.strftime('%H:%M') }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Locatie</span>
+        <span class="agenda-info-waarde">{{ workshop.location }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Trainer</span>
+        <span class="agenda-info-waarde">{{ workshop.trainer.name }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">School</span>
+        <span class="agenda-info-waarde">{{ workshop.school }}</span>
+      </div>
+    </div>
+    <a href="{{ url_for('publiek.workshop_detail', workshop_id=workshop.id) }}" 
+       class="agenda-detail-link">Bekijk details →</a>
+  </div>
+  {% else %}
+  <p class="agenda-leeg">Geen aankomende workshops.</p>
+  {% endfor %}
+</section>
+
+<section class="agenda-section">
+  <h2 class="agenda-section__title">
+    <span class="badge badge--afgerond">Afgerond</span>
+    Afgeronde workshops
+  </h2>
+  {% for workshop in afgerond %}
+  <div class="agenda-kaart">
+    <div class="agenda-kaart-header">
+      <span class="agenda-datum">{{ workshop.date.strftime('%d-%m-%Y') }}</span>
+      <span class="badge-afgerond">Afgerond</span>
+    </div>
+    <h3 class="agenda-naam">{{ workshop.name }}</h3>
+    <div class="agenda-info-rij">
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Tijd</span>
+        <span class="agenda-info-waarde">{{ workshop.start_time.strftime('%H:%M') }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Locatie</span>
+        <span class="agenda-info-waarde">{{ workshop.location }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">Trainer</span>
+        <span class="agenda-info-waarde">{{ workshop.trainer.name }}</span>
+      </div>
+      <div class="agenda-info-item">
+        <span class="agenda-info-label">School</span>
+        <span class="agenda-info-waarde">{{ workshop.school }}</span>
+      </div>
+    </div>
+    <a href="{{ url_for('publiek.workshop_detail', workshop_id=workshop.id) }}" 
+       class="agenda-detail-link">Bekijk details →</a>
+  </div>
+  {% else %}
+  <p class="agenda-leeg">Geen afgeronde workshops.</p>
+  {% endfor %}
+</section>
+{% endblock %}

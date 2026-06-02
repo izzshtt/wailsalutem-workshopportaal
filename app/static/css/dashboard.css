@@ -1,0 +1,227 @@
+/* Workshopportaal — Dashboard Design */
+
+/* ===== Dashboard Container ===== */
+.dashboard-container {
+    padding: 0;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* ===== Welkom Sectie ===== */
+.dashboard-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+.welcome-content h1 {
+    margin: 0 0 6px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.welcome-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.btn-new-workshop {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #1e293b;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.btn-new-workshop:hover {
+    background: #0f172a;
+}
+
+/* ===== KPI Sectie ===== */
+.kpi-section {
+    padding: 0 24px 24px 24px;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px 20px;
+    text-align: center;
+}
+
+.kpi-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.kpi-label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+}
+
+.kpi-trend {
+    font-size: 12px;
+    color: #27ae60;
+    font-weight: 500;
+}
+
+/* KPI responsive: 2 kolommen op tablet, 1 op mobiel */
+@media (max-width: 960px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 580px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Recente Workshops Sectie ===== */
+.recente-section {
+    padding: 0 24px 32px 24px;
+}
+
+.recente-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.recente-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.link-all {
+    font-size: 14px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-all:hover {
+    text-decoration: underline;
+}
+
+/* Tabel wrapper met scroll (scoped onder dashboard) */
+.dashboard-container .table-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.workshops-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.workshops-table thead {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.workshops-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.workshops-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+    color: #1f2937;
+}
+
+.workshops-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.workshops-table tbody tr:hover {
+    background: #fafbfc;
+}
+
+/* Badges (scoped onder dashboard) */
+.dashboard-container .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.badge-groen {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-blauw {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-grijs {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* Responsive: stapelen op mobiel */
+@media (max-width: 768px) {
+    .dashboard-welcome {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .welcome-content h1 {
+        font-size: 24px;
+    }
+
+    .workshops-table {
+        font-size: 12px;
+    }
+
+    .workshops-table th,
+    .workshops-table td {
+        padding: 10px 12px;
+    }
+}

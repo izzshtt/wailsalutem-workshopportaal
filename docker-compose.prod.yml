@@ -1,0 +1,61 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: nexus-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+  web:
+    image: ${WEB_IMAGE:-gitlab.fdmci.hva.nl:5050/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/out-bim/faaciiweedee14/web:latest}
+    build: .
+    container_name: nexus-web
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    expose:
+      - "5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: nexus-db
+    restart: unless-stopped
+    command:
+      - --innodb-buffer-pool-size=96M
+      - --innodb-log-buffer-size=8M
+      - --max-connections=20
+      - --performance-schema=OFF
+      - --skip-host-cache
+      - --skip-name-resolve
+    env_file:
+      - .env.production
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    mem_limit: 350m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$DB_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  caddy_data:
+  caddy_config:
+  db_data:

@@ -1,0 +1,62 @@
+{% extends 'admin_base.html' %}
+{% block title %}Workshops — WailSalutem{% endblock %}
+{% block admin_icon %}🎓{% endblock %}
+{% block admin_title %}Workshops{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Workshops</h1>
+  <div class="filter-actions">
+    <a href="{{ url_for('workshops.nieuw') }}" class="btn btn-primary">+ Registreren</a>
+  </div>
+</header>
+
+{% if workshop_rijen %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Datum</th>
+        <th>Locatie</th>
+        <th>School</th>
+        <th>Status</th>
+        <th>Trainer</th>
+        <th>Deelnemers</th>
+        <th>Duur</th>
+        <th>Acties</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for workshop in workshop_rijen %}
+      <tr>
+        <td><a href="{{ workshop.detail_url }}">{{ workshop.naam }}</a></td>
+        <td>{{ workshop.datum }}</td>
+        <td>{{ workshop.locatie }}</td>
+        <td>{{ workshop.school }}</td>
+        <td><span class="badge {{ workshop.status_klasse }}">{{ workshop.status_label }}</span></td>
+        <td>{{ workshop.trainer_naam }}</td>
+        <td>{{ workshop.aantal_deelnemers }}</td>
+        <td>{{ workshop.duur_label }}</td>
+        <td class="table-actions">
+          <a href="{{ workshop.bewerken_url }}" class="btn btn-sm btn-outline">Bewerken</a>
+          <form
+            method="POST"
+            action="{{ workshop.verwijderen_url }}"
+            class="d-inline"
+            onsubmit="return confirm('Weet je zeker dat je deze workshop wilt verwijderen?')">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm btn-danger">Verwijderen</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<section class="empty-state">
+  <p>Er zijn nog geen workshops geregistreerd.</p>
+</section>
+{% endif %}
+{% endblock %}

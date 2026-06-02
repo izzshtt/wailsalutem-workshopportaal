@@ -1,0 +1,196 @@
+/* WailSalutem navigatiebalk */
+
+/* ===== Header — sticky navigatiebalk ===== */
+.site-header {
+    background: #5482b8; /* Originele primaire blauw */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15); /* Subtiele schaduw */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Flex-rij: logo links, navigatie rechts */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px; /* Ruimere hoogte (vergelijkbaar met py-4) */
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Ruimte tussen afbeelding en tekst */
+    flex-shrink: 0;
+}
+
+.logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    /* Verwijderd filter: brightness(0) invert(1); zodat originele logo kleuren behouden blijven */
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff; /* Witte tekst voor logo */
+    letter-spacing: -0.5px;
+}
+
+/* Horizontale navigatielinks met flexbox */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px; /* Ruimte tussen items (gap-6 in Tailwind is 1.5rem/24px) */
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85); /* Semi-transparant wit */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #ffffff; /* Volledig wit bij hover */
+}
+
+/* Lijn tussen navigatie en naam (border-l) */
+.nav-divider {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 0.3); /* Zachte lijn */
+}
+
+.nav-user {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Knoppen specifiek in de navbar */
+.site-header .btn-primary {
+    background: rgba(255, 255, 255, 0.15); /* Subtiel licht doorzichtig voor in de blauwe bar */
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.site-header .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ===== Hamburger-menu (mobiel) ===== */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.nav-toggle:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.is-open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.nav-toggle.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Header responsive — wrap navigatie op tablet */
+@media (max-width: 900px) {
+    .header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 0;
+        gap: 16px;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+        width: 100%;
+        gap: 16px;
+    }
+}
+
+/* Hamburger — mobiel onder 640px */
+@media (max-width: 640px) {
+    .nav-toggle {
+        display: flex;
+        margin-left: auto;
+    }
+
+    .header-inner {
+        flex-wrap: nowrap;
+        height: 56px;
+        padding: 0;
+        gap: 8px;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #5482b8;
+        padding: 8px 24px 16px;
+        gap: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+        z-index: 99;
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .main-nav.is-open {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .nav-divider {
+        display: none;
+    }
+
+    .nav-user {
+        padding: 12px 0;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+}

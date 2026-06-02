@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}
+  Aanmelden voor Workshop — WailSalutem
+{% endblock %}
+
+{% block content %}
+<section class="aanmeld-hero">
+  <h1>Aanmelden voor een Workshop</h1>
+  <p>Meld je kind gratis aan voor een tech-workshop van WailSalutem</p>
+</section>
+
+<div class="aanmeld-layout">
+  <div class="card form-card">
+    <h2 class="card-title">Aanmeldformulier</h2>
+    <form method="POST" action="{{ url_for('publiek.aanmelden') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-group">
+        <label for="naam_kind">Naam kind</label>
+        <input
+          type="text"
+          id="naam_kind"
+          name="naam_kind"
+          class="form-control"
+          placeholder="Voornaam en achternaam"
+          required>
+      </div>
+      <div class="form-row--2col">
+        <div class="form-group">
+          <label for="leeftijd">Leeftijd</label>
+          <input
+            type="number"
+            id="leeftijd"
+            name="leeftijd"
+            class="form-control"
+            min="6"
+            max="18"
+            placeholder="bv. 10"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="workshop_id">Workshop</label>
+          <select id="workshop_id" name="workshop_id" class="form-control" required>
+            <option value="">— Kies een workshop —</option>
+            {% for workshop in workshop_opties %}
+            <option value="{{ workshop.id }}" {% if workshop.disabled %}disabled{% endif %}>
+              {{ workshop.label }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="naam_ouder">Naam ouder/verzorger</label>
+        <input
+          type="text"
+          id="naam_ouder"
+          name="naam_ouder"
+          class="form-control"
+          placeholder="Voornaam en achternaam"
+          required>
+      </div>
+      <div class="form-row--2col">
+        <div class="form-group">
+          <label for="email">E-mailadres</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="ouder@voorbeeld.nl"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="telefoon">Telefoonnummer</label>
+          <input
+            type="tel"
+            id="telefoon"
+            name="telefoon"
+            class="form-control"
+            placeholder="06-12345678">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="opmerkingen">Opmerkingen (optioneel)</label>
+        <textarea
+          id="opmerkingen"
+          name="opmerkingen"
+          class="form-control"
+          rows="3"
+          placeholder="Bijzonderheden, allergieen, etc."></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Aanmelden</button>
+        <a href="{{ url_for('publiek.catalogus') }}" class="btn btn-secondary">
+          Terug naar catalogus
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <aside class="aanmeld-info">
+    <section class="card">
+      <h3 class="card-title">Hoe werkt het?</h3>
+      <ol class="info-steps">
+        <li>Kies een workshop uit onze catalogus</li>
+        <li>Vul het aanmeldformulier in</li>
+        <li>Je ontvangt een bevestiging per e-mail</li>
+        <li>Kom naar de workshop en leer nieuwe vaardigheden!</li>
+      </ol>
+    </section>
+    <section class="card mt-16">
+      <h3 class="card-title">Vragen?</h3>
+      <p class="text-muted text-sm">
+        Neem contact op via
+        <a href="mailto:info@wailsalutem-foundation.com">
+          info@wailsalutem-foundation.com
+        </a>
+        of bel
+        <a href="tel:+31640690319">06 4069 0319</a>
+      </p>
+    </section>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'admin_base.html' %}
+{% block title %}{{ titel }} — WailSalutem{% endblock %}
+{% block admin_icon %}👥{% endblock %}
+{% block admin_title %}Gebruikers{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>{{ titel }}</h1>
+  <a href="{{ url_for('gebruikers.overzicht') }}" class="btn btn-outline">&larr; Terug</a>
+</header>
+
+<section class="card form-card">
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.naam.label }}
+        {{ form.naam(class="form-control", placeholder="Bijv. Jan de Vries") }}
+        {% for error in form.naam.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email(class="form-control", placeholder="naam@voorbeeld.nl") }}
+        {% for error in form.email.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.wachtwoord.label }}
+        {{ form.wachtwoord(class="form-control", placeholder="Minimaal 6 tekens") }}
+        <span class="form-hint">Laat leeg bij bewerken om het huidige wachtwoord te bewaren.</span>
+        {% for error in form.wachtwoord.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.rol.label }}
+        {{ form.rol(class="form-control", id="rol-select") }}
+        {% for error in form.rol.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="trainer-velden" style="display:none">
+      <div class="form-row form-row--2col">
+        <div class="form-group">
+          {{ form.telefoonnummer.label }}
+          {{ form.telefoonnummer(class="form-control", placeholder="Bijv. 06-12345678") }}
+          {% for error in form.telefoonnummer.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.leeftijdsrange.label }}
+          {{ form.leeftijdsrange(class="form-control", placeholder="Bijv. 8-14") }}
+          {% for error in form.leeftijdsrange.errors %}
+          <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      {{ form.submit(class="btn btn-primary") }}
+      <a href="{{ url_for('gebruikers.overzicht') }}" class="btn btn-outline">Annuleren</a>
+    </div>
+  </form>
+</section>
+
+<script>
+  (function () {
+    var select = document.getElementById('rol-select');
+    var velden = document.getElementById('trainer-velden');
+
+    function toggle() {
+      velden.style.display = select.value === 'trainer' ? '' : 'none';
+    }
+
+    toggle();
+    select.addEventListener('change', toggle);
+  })();
+</script>
+{% endblock %}

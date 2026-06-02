@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Aanmelding Bevestigd - Serhat{% endblock %}
+
+{% block content %}
+<div class="serhat-form-container">
+  <h1>Aanmelding bevestigd!</h1>
+
+  <!-- Op deze pagina laten we de belangrijkste velden van de aanmelding zien. -->
+  <p>Bedankt <strong>{{ aanmelding.child_name }}</strong>, je aanmelding is ontvangen.</p>
+  <p>We hebben een bevestiging gestuurd naar <strong>{{ aanmelding.email }}</strong>.</p>
+
+  <!-- Gebruiksvriendelijke link om direct nog een nieuwe aanmelding te doen. -->
+  <a href="{{ url_for('serhat_aanmelden.formulier') }}">
+    <button type="button">Nog iemand aanmelden</button>
+  </a>
+</div>
+{% endblock %}

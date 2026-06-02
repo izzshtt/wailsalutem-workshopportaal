@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}{{ workshop.naam }} — WailSalutem{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>{{ workshop.naam }}</h1>
+  <a href="{{ url_for('publiek.catalogus') }}" class="btn btn-secondary">
+    ← Terug naar catalogus
+  </a>
+</header>
+
+<div class="ws-chip-grid">
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#eff6ff;">📅</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Datum</span>
+      <span class="ws-chip-value">{{ workshop.datum }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#f0fdf4;">🕐</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Tijdstip</span>
+      <span class="ws-chip-value">{{ workshop.tijdstip }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#fef3c7;">📍</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Locatie</span>
+      <span class="ws-chip-value">{{ workshop.locatie }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#fdf4ff;">🏫</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">School</span>
+      <span class="ws-chip-value">{{ workshop.school }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#fff1f2;">👤</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Trainer</span>
+      <span class="ws-chip-value">{{ workshop.trainer_naam }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip">
+    <div class="ws-chip-icon" style="background:#f0fdfa;">👥</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Deelnemers</span>
+      <span class="ws-chip-value">{{ workshop.aantal_deelnemers_label }}</span>
+    </div>
+  </div>
+
+  <div class="ws-chip ws-chip-full">
+    <div class="ws-chip-icon" style="background:#f8fafc;">⏱</div>
+    <div class="ws-chip-text">
+      <span class="ws-chip-label">Duur</span>
+      <span class="ws-chip-value">{{ workshop.duur_label }}</span>
+    </div>
+  </div>
+</div>
+
+{% if workshop.leeruitkomsten %}
+<section class="card detail-leeruitkomsten">
+  <h2 class="detail-section-title">Wat leer je bij deze workshop?</h2>
+  <ul class="leeruitkomsten-lijst">
+    {% for uitkomst in workshop.leeruitkomsten %}
+    <li class="leeruitkomst-item">{{ uitkomst }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if workshop.heeft_locatie %}
+<section class="card detail-location">
+  <h2 class="detail-location-title">Locatie</h2>
+  <iframe
+    src="https://maps.google.com/maps?q={{ workshop.locatie_encoded }}&amp;output=embed"
+    width="100%"
+    height="350"
+    class="detail-map"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+  <a
+    href="https://maps.google.com/maps?q={{ workshop.locatie_encoded }}"
+    target="_blank"
+    rel="noopener"
+    class="detail-map-link">
+    Bekijk op Google Maps ↗
+  </a>
+</section>
+{% endif %}
+{% endblock %}

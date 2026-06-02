@@ -1,0 +1,65 @@
+{% extends 'admin_base.html' %}
+{% block title %}Sponsors — WailSalutem{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Sponsors &amp; Samenwerkingen</h1>
+  <a href="{{ url_for('sponsors.toevoegen') }}" class="btn btn-primary">+ Sponsor toevoegen</a>
+</header>
+
+{% if sponsors %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Naam</th>
+        <th>Website</th>
+        <th>Acties</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sponsor in sponsors %}
+      <tr>
+        <td>
+          {% if sponsor.logo_bestandsnaam %}
+          <img
+            src="{{ url_for('static', filename='images/' + sponsor.logo_bestandsnaam) }}"
+            alt="{{ sponsor.naam }}"
+            style="height:40px; width:auto; object-fit:contain;">
+          {% else %}
+          <span style="color:#9ca3af;">Geen logo</span>
+          {% endif %}
+        </td>
+        <td>{{ sponsor.naam }}</td>
+        <td>
+          {% if sponsor.website_url %}
+          <a href="{{ sponsor.website_url }}" target="_blank" rel="noopener">
+            {{ sponsor.website_url }}
+          </a>
+          {% else %}
+          —
+          {% endif %}
+        </td>
+        <td class="table-actions">
+          <a href="{{ url_for('sponsors.bewerken', sponsor_id=sponsor.id) }}"
+            class="btn btn-sm btn-outline">Bewerken</a>
+          <form method="POST"
+            action="{{ url_for('sponsors.verwijderen', sponsor_id=sponsor.id) }}"
+            class="d-inline"
+            onsubmit="return confirm('Weet je zeker dat je {{ sponsor.naam }} wilt verwijderen?')">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm btn-danger">Verwijderen</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<section class="empty-state">
+  <p>Er zijn nog geen sponsors toegevoegd.</p>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,140 @@
+/* ===== Aanmeldpagina ===== */
+
+.aanmeld-hero {
+    background: linear-gradient(135deg, #3f6a9a 0%, #5482b8 100%);
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    margin: -2rem -1.5rem 2rem;
+    text-align: center;
+}
+.aanmeld-hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 .4rem;
+}
+.aanmeld-hero p {
+    font-size: .95rem;
+    color: rgba(255,255,255,0.82);
+    margin: 0;
+}
+
+.aanmeld-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: flex-start;
+}
+
+.aanmeld-layout > :first-child {
+    flex: 1.5 1 320px;
+}
+
+.aanmeld-layout > :last-child {
+    flex: 1 1 260px;
+}
+
+@media (max-width: 768px) {
+    .aanmeld-layout > :first-child,
+    .aanmeld-layout > :last-child {
+        flex: 1 1 100%;
+    }
+}
+
+.info-steps {
+    padding-left: 20px;
+    color: #6b7c93;
+    font-size: 14px;
+}
+
+.info-steps li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* ===== Bevestigingspagina ===== */
+
+.bevestiging-pagina {
+    max-width: 560px;
+    margin: 60px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.bevestiging-icoon {
+    font-size: 56px;
+}
+
+.bevestiging-titel {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.bevestiging-subtitel {
+    font-size: 15px;
+    color: #6b7280;
+    max-width: 400px;
+}
+
+.bevestiging-kaart {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    text-align: left;
+}
+
+.bevestiging-kaart-titel {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.bevestiging-rij {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f9fafb;
+}
+
+.bevestiging-rij:last-child {
+    border-bottom: none;
+}
+
+.bevestiging-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+}
+
+.bevestiging-waarde {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.btn-terug-catalogus {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4e7db5;
+    border: 1.5px solid #4e7db5;
+    text-decoration: none;
+    background: #fff;
+}
+
+.btn-terug-catalogus:hover {
+    background: #eff6ff;
+}

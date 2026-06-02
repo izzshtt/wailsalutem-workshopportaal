@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Beheer — WailSalutem{% endblock %}</title>
+  <link rel="preconnect"
+    href="https://fonts.googleapis.com">
+  <link rel="preconnect"
+    href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/navigation.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/component.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/forms.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/catalogus.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/agenda.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/aanmelden.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/workshop-detail.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="{{ url_for('publiek.catalogus') }}" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WailSalutem Logo" class="logo-img">
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Menu openen" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="{{ url_for('publiek.catalogus') }}" class="nav-link">Catalogus</a>
+        <a href="{{ url_for('dashboard.dashboard') }}" class="nav-link">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="admin-brand__mark">
+          <img src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="WailSalutem">
+        </div>
+        <div class="admin-brand__text">
+          <strong>WAIL</strong>
+          <span>SALUTEM</span>
+          <small>Impact &amp; Workshop Portaal</small>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <div class="admin-sidebar__group">
+          <p class="admin-sidebar__label">Dashboard</p>
+          <a href="{{ url_for('aanmeldformulier.overzicht') }}"
+            class="admin-sidebar__link{% if request.endpoint == 'aanmeldformulier.overzicht' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">📝</span>
+            Aanmeldingen
+          </a>
+          <a href="{{ url_for('workshops.overzicht') }}"
+            class="admin-sidebar__link{% if request.blueprint == 'workshops' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">🎓</span>
+            Workshops
+          </a>
+          <a href="{{ url_for('agenda.overzicht') }}"
+            class="admin-sidebar__link{% if request.blueprint == 'agenda' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">🗓️</span>
+            Agenda
+          </a>
+          <a href="{{ url_for('gebruikers.overzicht') }}"
+            class="admin-sidebar__link{% if request.blueprint == 'gebruikers' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">👥</span>
+            Gebruikers
+          </a>
+          <a href="{{ url_for('sponsors.overzicht') }}"
+            class="admin-sidebar__link{% if request.blueprint == 'sponsors' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">🤝</span>
+            Sponsors
+          </a>
+        </div>
+
+        <div class="admin-sidebar__group">
+          <p class="admin-sidebar__label">Rapportage</p>
+          <a href="{{ url_for('dashboard.impact') }}"
+            class="admin-sidebar__link{% if request.blueprint == 'dashboard' and request.endpoint == 'dashboard.impact' %} is-active{% endif %}">
+            <span class="admin-sidebar__icon">📈</span>
+            Impact
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    
+    <div class="admin-main">
+      <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flashes">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="admin-footer">
+        <p>&copy; 2026 WailSalutem Foundation &mdash; Alle rechten voorbehouden</p>
+        <nav class="admin-footer__links">
+          <a href="{{ url_for('publiek.privacybeleid') }}">Privacybeleid</a>
+          <a href="{{ url_for('publiek.voorwaarden') }}">Algemene voorwaarden</a>
+          <a href="{{ url_for('publiek.catalogus') }}">Publieke catalogus</a>
+        </nav>
+      </footer>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('mainNav');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', function () {
+        var open = nav.classList.toggle('is-open');
+        btn.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+      });
+    })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

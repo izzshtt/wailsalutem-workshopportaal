@@ -1,0 +1,174 @@
+{% extends 'admin_base.html' %}
+{% block title %}Dashboard — Workshopportaal{% endblock %}
+{% block admin_icon %}📊{% endblock %}
+{% block admin_title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <!-- Welkom sectie -->
+    <section class="dashboard-welcome">
+        <div class="welcome-content">
+            <h1>Welkom terug! 👋</h1>
+            <p>Overzicht van impact en activiteiten · 2025–2026</p>
+        </div>
+        <a href="{{ url_for('workshops.nieuw') }}" class="btn-new-workshop">+ Nieuw workshop</a>
+    </section>
+
+    <!-- KPI Kaartjes -->
+    <section class="kpi-section">
+        <div class="kpi-grid">
+
+            <article class="kpi-card">
+                <div class="kpi-icon">📋</div>
+                <div class="kpi-value">{{ stats.totaal_workshops }}</div>
+                <div class="kpi-label">Totaal workshops</div>
+                <div class="kpi-trend">+{{ stats.workshops_deze_maand }} deze maand</div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon">👨‍👩‍👧‍👦</div>
+                <div class="kpi-value">{{ stats.kinderen_bereikt }}</div>
+                <div class="kpi-label">Kinderen bereikt</div>
+                <div class="kpi-trend">+{{ stats.kinderen_deze_maand }} deze maand</div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon">🏫</div>
+                <div class="kpi-value">{{ stats.unieke_scholen }}</div>
+                <div class="kpi-label">Scholen</div>
+                <div class="kpi-trend">&nbsp;</div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon">👨‍🏫</div>
+                <div class="kpi-value">{{ stats.actieve_trainers }}</div>
+                <div class="kpi-label">Trainers actief</div>
+                <div class="kpi-trend">&nbsp;</div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Recente workshops tabel -->
+    <section class="recente-section">
+        <div class="recente-header">
+            <h2>Recente workshops</h2>
+            <a href="{{ url_for('workshops.overzicht') }}" class="link-all">Alle workshops →</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="workshops-table">
+                <thead>
+                    <tr>
+                        <th>WORKSHOP</th>
+                        <th>SCHOOL</th>
+                        <th>DATUM</th>
+                        <th>DEELNEMERS</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for workshop in recente_workshops %}
+                    <tr>
+                        <td>{{ workshop.name }}</td>
+                        <td>{{ workshop.school }}</td>
+                        <td>{{ workshop.date }}</td>
+                        <td>{{ workshop.registrations | length }}</td>
+                        <td>
+                            {% if workshop.is_completed() %}
+                                <span class="badge badge-groen">Afgerond</span>
+                            {% else %}
+                                <span class="badge badge-blauw">Gepland</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    {% if not recente_workshops %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #9ca3af; padding: 24px;">
+                            Geen workshops gevonden.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Recente aanmeldingen tabel -->
+    <section class="recente-section">
+        <div class="recente-header">
+            <h2>Recente aanmeldingen</h2>
+            <a href="{{ url_for('aanmeldformulier.overzicht') }}" class="link-all">Alle aanmeldingen →</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="workshops-table">
+                <thead>
+                    <tr>
+                        <th>NAAM KIND</th>
+                        <th>WORKSHOP</th>
+                        <th>DATUM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aanmelding in recente_aanmeldingen %}
+                    <tr>
+                        <td>{{ aanmelding.child_name }}</td>
+                        <td>{{ aanmelding.workshop.name }}</td>
+                        <td>{{ aanmelding.created_at.strftime('%d-%m-%Y') }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    {% if not recente_aanmeldingen %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #9ca3af; padding: 24px;">
+                            Geen aanmeldingen gevonden.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+<!-- Kaart met workshop locaties -->
+    <section class="recente-section">
+        <div class="recente-header">
+            <h2>Workshop locaties</h2>
+        </div>
+        <div id="kaart" style="height: 400px; border-radius: 12px;"></div>
+    </section>
+</div>
+<script type="application/json" id="kaart-data">{{ kaart_data | tojson }}</script>
+<script>
+  var kaart = L.map('kaart').setView([52.3676, 4.9041], 8);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(kaart);
+
+  var workshops = JSON.parse(document.getElementById('kaart-data').textContent);
+
+  workshops.forEach(function(ws) {
+    if (ws.lat && ws.lng) {
+      L.marker([ws.lat, ws.lng])
+        .addTo(kaart)
+        .bindPopup(
+          '<strong>' + ws.naam + '</strong><br>' +
+          '📅 ' + ws.datum + '<br>' +
+          '📍 ' + ws.locatie
+        );
+    }
+  });
+</script>
+{% endblock %}

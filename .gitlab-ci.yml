@@ -1,0 +1,81 @@
+# Dit bestand is gebaseerd op een template:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
+# Docker-in-Docker documentatie: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+
+variables:
+  DEPLOY_MKDOCS: "true"
+
+stages:
+  - build
+  - test
+  - deploy
+
+# Documentatie-site bouwen en publiceren op GitLab Pages
+pages:
+  image: python:3.9-slim
+  stage: build
+  when: always
+  tags:
+  - hva
+  before_script:
+  - time apt update && apt-get install -y git
+  - time pip install --upgrade pip
+  - time pip install -r docs/requirements.txt
+  - time git clone https://uva-hva.gitlab.host/hbo-ict/mdocotion.git mdocotion
+  - time cd mdocotion && python setup.py install && cd ..
+  script:
+  - time mkdocs build --site-dir public --config-file mkdocs.yml
+  artifacts:
+    paths:
+    - public
+  rules:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_MKDOCS == "true"
+
+unit_tests:
+  stage: test
+  image: python:3.11-slim
+  tags:
+    - hva
+  variables:
+    DATABASE_URL: "sqlite:///:memory:"
+    SECRET_KEY: "test-secret"
+    ADMIN_EMAIL: "admin@test.nl"
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - pytest test_auth.py -v
+
+# Automatische deployment naar Railway via GraphQL API
+deploy_to_railway:
+  stage: deploy
+  image: alpine:latest
+  tags:
+    - hva
+  only:
+    - main
+  dependencies: []
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - |
+      curl -f -X POST https://backboard.railway.app/graphql/v2 \
+        -H "Authorization: Bearer $RAILWAY_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d "{\"query\":\"mutation { serviceInstanceRedeploy(environmentId: \\\"$RAILWAY_ENVIRONMENT_ID\\\", serviceId: \\\"$RAILWAY_SERVICE_ID\\\") }\"}"
+
+# Automatische deployment naar de productie-VPS bij elke push naar main
+deploy_to_vps:
+  stage: deploy
+  image: alpine:latest
+  tags:
+  - hva
+  only:
+    - main
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+  script:
+    - ssh -i ~/.ssh/id_ed25519 root@$SSH_HOST "cd /var/www/wailsalutem && git pull && docker-compose down && docker-compose up -d --build"

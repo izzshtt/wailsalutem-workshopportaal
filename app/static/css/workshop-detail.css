@@ -1,0 +1,57 @@
+/* ===== Workshop detail — locatie en leeruitkomsten ===== */
+
+.detail-location {
+    margin-top: 1.5rem;
+}
+.detail-location-title {
+    margin-bottom: 1rem;
+}
+.detail-map {
+    border: 0;
+    border-radius: 8px;
+    display: block;
+}
+.detail-map-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+}
+
+.detail-no-location {
+    color: #6b7c93;
+    margin-top: 1rem;
+}
+
+.detail-actions {
+    margin-top: 1.5rem;
+}
+
+.detail-leeruitkomsten {
+    margin-bottom: 24px;
+    padding: 20px 24px;
+}
+
+.detail-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 14px;
+}
+
+.leeruitkomsten-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.leeruitkomst-item {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}

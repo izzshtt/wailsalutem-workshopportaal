@@ -1,0 +1,174 @@
+/* WailSalutem footer */
+
+/* ===== Footer — 4 kolommen met flexbox ===== */
+.site-footer {
+    background: #5482b8;
+    font-family: 'Inter', sans-serif;
+    padding: 48px 0 0;
+    margin-top: 40px;
+}
+
+/* Flex-rij voor footer kolommen met wrap */
+.footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Kolom-breedtes via flex-basis verhoudingen */
+.footer-col {
+    flex: 1 1 200px;
+}
+
+/* Eerste kolom (over ons) breder dan de rest */
+.footer-col:first-child {
+    flex: 1.4 1 260px;
+}
+
+/* Laatste kolom (contact) iets breder */
+.footer-col:last-child {
+    flex: 1.2 1 220px;
+}
+
+.footer-logo {
+    height: 48px;
+    width: auto;
+    margin-bottom: 16px;
+}
+
+.footer-desc {
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* Kolomkoppen in de footer */
+.footer-heading {
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+/* Navigatielinks binnen footer kolommen */
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* Contactgegevens lijst met iconen */
+.footer-contact {
+    list-style: none;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+}
+
+.footer-contact li svg {
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.6);
+}
+
+.footer-contact a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.footer-contact a:hover {
+    color: #fff;
+}
+
+.footer-kvk {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Copyright balk onderaan de footer */
+.footer-bottom {
+    background: #3a6ba5;
+    padding: 14px 0;
+    margin-top: 0;
+}
+
+/* Flex-rij: copyright links, juridische links rechts */
+.footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-bottom p {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-legal a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s;
+}
+
+.footer-legal a:hover {
+    color: #fff;
+}
+
+/* Footer responsive — tablet: 2 kolommen, mobiel: 1 kolom */
+@media (max-width: 960px) {
+    .footer-col {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 580px) {
+    .footer-grid {
+        flex-direction: column;
+    }
+
+    .footer-col {
+        flex: 1 1 100%;
+    }
+
+    .footer-bottom-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-legal {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,141 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+  Impact Rapportage — WailSalutem
+{% endblock %}
+{% block admin_icon %}📈{% endblock %}
+{% block admin_title %}Impact{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <h1>Impact Rapportage</h1>
+    <p class="page-subtitle">
+      Overzicht van onze maatschappelijke impact
+    </p>
+  </div>
+  <div style="display:flex; gap:0.5rem;">
+    <a href="{{ url_for('dashboard.export_excel', datum_van=datum_van, datum_tot=datum_tot) }}"
+       class="btn btn-primary">
+      Exporteer Excel
+    </a>
+    <a href="{{ url_for('dashboard.export_pdf', datum_van=datum_van, datum_tot=datum_tot) }}"
+       class="btn btn-secondary">
+      Exporteer PDF
+    </a>
+  </div>
+</header>
+
+<form method="GET"
+  action="{{ url_for('dashboard.impact') }}"
+  class="filter-bar">
+  <div class="filter-group">
+    <label for="datum_van">Van</label>
+    <input type="date" id="datum_van" name="datum_van"
+      class="form-control"
+      value="{{ datum_van }}">
+  </div>
+  <div class="filter-group">
+    <label for="datum_tot">Tot</label>
+    <input type="date" id="datum_tot" name="datum_tot"
+      class="form-control"
+      value="{{ datum_tot }}">
+  </div>
+  <div class="filter-actions">
+    <button type="submit" class="btn btn-primary">Filteren</button>
+    <a href="{{ url_for('dashboard.impact') }}"
+      class="btn btn-secondary">Wissen</a>
+  </div>
+</form>
+
+<section class="kpi-grid kpi-grid--4">
+  <article class="kpi-card">
+    <div class="kpi-icon">&#128203;</div>
+    <div class="kpi-value">
+      {{ totaal_workshops }}
+    </div>
+    <div class="kpi-label">Workshops gegeven</div>
+  </article>
+  <article class="kpi-card kpi-card--accent">
+    <div class="kpi-icon">&#128106;</div>
+    <div class="kpi-value">
+      {{ totaal_deelnemers }}
+    </div>
+    <div class="kpi-label">Kinderen bereikt</div>
+  </article>
+  <article class="kpi-card">
+    <div class="kpi-icon">&#127978;</div>
+    <div class="kpi-value">
+      {{ unieke_locaties }}
+    </div>
+    <div class="kpi-label">Unieke scholen</div>
+  </article>
+  <article class="kpi-card">
+    <div class="kpi-icon">&#9201;</div>
+    <div class="kpi-value">{{ totale_uren }}</div>
+    <div class="kpi-label">Lesuren gegeven</div>
+  </article>
+</section>
+
+{% if per_maand %}
+<section class="card mb-28">
+  <h2 class="card-title">Workshops per maand</h2>
+  <div class="table-wrapper no-border">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Periode</th>
+          <th>Workshops</th>
+          <th>Deelnemers</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rij in per_maand %}
+        <tr>
+          <td>
+            {{ rij.maand|int }}-{{ rij.jaar|int }}
+          </td>
+          <td>{{ rij.aantal }}</td>
+          <td>{{ rij.deelnemers or 0 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+{% if top_scholen %}
+<section class="card">
+  <h2 class="card-title">
+    Top 10 scholen op bereik
+  </h2>
+  <div class="table-wrapper no-border">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>School</th>
+          <th>Workshops</th>
+          <th>Deelnemers</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for school in top_scholen %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ school.school }}</td>
+          <td>{{ school.aantal }}</td>
+          <td>{{ school.deelnemers or 0 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

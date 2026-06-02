@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Pagina niet gevonden{% endblock %}
+{% block content %}
+<section class="empty-state">
+  <h2>404 — Pagina niet gevonden</h2>
+  <p>De pagina die je zoekt bestaat niet of is verplaatst.</p>
+  <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-primary">
+    Terug naar dashboard
+  </a>
+</section>
+{% endblock %}

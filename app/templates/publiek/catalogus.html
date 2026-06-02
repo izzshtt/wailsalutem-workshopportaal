@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}
+  Workshop Catalogus — WailSalutem
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <img
+    src="{{ url_for('static', filename='images/logo.png') }}"
+    alt="WailSalutem"
+    class="hero-logo">
+  <p class="hero-label">WailSalutem</p>
+  <h1>Workshops</h1>
+  <p class="hero-sub">
+    Bekijk ons aanbod en schrijf je in voor een workshop bij jou in de buurt.
+  </p>
+  <nav class="hero-actions">
+    <a href="{{ url_for('publiek.aanmelden') }}" class="btn-hero-accent">
+      Aanmelden
+    </a>
+  </nav>
+</section>
+
+<!-- DATUMFILTER SECTIE -->
+<section class="filter-section">
+  <div class="filter-container">
+    <form method="get" action="{{ url_for('publiek.catalogus') }}" class="filter-form">
+      <div class="filter-group">
+        <label for="datum-filter">Filter op datum:</label>
+        <input 
+          type="date" 
+          id="datum-filter" 
+          name="datum" 
+          value="{{ selected_date or '' }}"
+          class="filter-input">
+      </div>
+      <button type="submit" class="btn-filter">Filter</button>
+      {% if selected_date %}
+      <a href="{{ url_for('publiek.catalogus') }}" class="btn-clear-filter">
+        Filter wissen
+      </a>
+      {% endif %}
+    </form>
+  </div>
+</section>
+
+{% if workshop_kaarten %}
+<!-- DATABASE OUTPUT: workshop_kaarten bevat alle data uit DATABASE CALL 1 & 2 -->
+<section class="cat-wrapper">
+  {% for workshop in workshop_kaarten %}
+  <a href="{{ url_for('publiek.workshop_detail', workshop_id=workshop.id) }}" class="ws-card-link">
+    <article class="ws-card">
+      <header class="ws-header">
+        <div class="ws-header-body">
+          <div class="ws-title-row">
+            <h3 class="ws-title">{{ workshop.naam }}</h3>
+            {% if workshop.is_vol %}
+            <span class="badge-vol">Vol</span>
+            {% endif %}
+          </div>
+          <p class="ws-subtitle">
+            {{ workshop.school }}{% if workshop.heeft_locatie %} · {{ workshop.locatie }}{% endif %}
+          </p>
+        </div>
+      </header>
+
+      <ul class="ws-meta">
+        {% if workshop.heeft_leeftijd %}
+        <li>Leeftijd {{ workshop.leeftijd_label }}</li>
+        {% endif %}
+        {% if workshop.heeft_duur %}
+        <li>{{ workshop.duur_label }}</li>
+        {% endif %}
+        {% if workshop.heeft_trainer %}
+        <li>{{ workshop.trainer_naam }}</li>
+        {% endif %}
+      </ul>
+
+      {% if workshop.heeft_beschrijving %}
+      <p class="ws-desc">{{ workshop.beschrijving }}</p>
+      {% endif %}
+
+      <div class="ws-session">
+        <span class="ws-session-left">
+          {{ workshop.datum_tijd_locatie_label }}
+        </span>
+        {% if workshop.is_vol %}
+        <span class="badge-vol">Vol</span>
+        {% else %}
+        <span class="ws-plekken">{{ workshop.vrije_plekken_label }}</span>
+        {% endif %}
+      </div>
+
+      <footer class="ws-actions">
+        <a href="{{ url_for('publiek.aanmelden') }}" class="btn-aanmelden">
+          Aanmelden
+        </a>
+      </footer>
+    </article>
+  </a>
+  {% endfor %}
+</section>
+{% else %}
+<section class="cat-wrapper">
+  <section class="cat-empty">
+    <p class="cat-empty-icon">📅</p>
+    <h2>Geen workshops gepland</h2>
+    <p>
+      Er zijn momenteel geen aankomende
+      workshops. Kijk later nog eens of
+      neem contact met ons op!
+    </p>
+  </section>
+</section>
+{% endif %}
+
+<!-- SPONSORS & SAMENWERKINGEN -->
+{% if sponsors %}
+<section class="partners-strip">
+  <div class="partners-inner">
+    <div class="partners-heading">
+      <p class="partners-label">Onze sponsors &amp; samenwerkingen</p>
+    </div>
+    <div class="partners-logos">
+      {% for sponsor in sponsors %}
+      <a href="{{ sponsor.website_url or '#' }}"
+        {% if sponsor.website_url %}target="_blank" rel="noopener"{% endif %}
+        class="partner-logo-link"
+        title="{{ sponsor.naam }}">
+        {% if sponsor.logo_bestandsnaam %}
+        <img
+          src="{{ url_for('static', filename='images/' + sponsor.logo_bestandsnaam) }}"
+          alt="{{ sponsor.naam }}"
+          class="partner-logo">
+        {% else %}
+        <span style="font-size:.85rem; font-weight:600; color:#6b7c93;">{{ sponsor.naam }}</span>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

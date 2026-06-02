@@ -1,0 +1,302 @@
+/* WailSalutem herbruikbare componenten */
+/* Knoppen, kaarten, badges, tabellen */
+
+/* ===== Flash messages — feedback meldingen ===== */
+.flashes {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Kleurvarianten per type melding */
+.alert-success {
+    background: #d5f5e3;
+    color: #1e8449;
+    border-left: 4px solid #27ae60;
+}
+.alert-danger {
+    background: #fadbd8;
+    color: #922b21;
+    border-left: 4px solid #c0392b;
+}
+.alert-warning {
+    background: #fdebd0;
+    color: #784212;
+    border-left: 4px solid #e67e22;
+}
+.alert-info {
+    background: #d6eaf8;
+    color: #1a5276;
+    border-left: 4px solid #2980b9;
+}
+
+/* ===== Page header — titel + actieknoppen ===== */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1c2b3a;
+}
+
+.page-subtitle {
+    color: #6b7c93;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+/* Responsive: titel en knoppen onder elkaar op mobiel */
+@media (max-width: 580px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== Buttons — primair, secundair, outline, danger ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background 0.15s, border-color 0.15s,
+        color 0.15s;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: #5482b8;
+    color: #fff;
+    border-color: #5482b8;
+}
+
+.btn-primary:hover {
+    background: #3f6a9a;
+    border-color: #3f6a9a;
+}
+
+.btn-secondary {
+    background: #ffffff;
+    color: #5482b8;
+    border-color: #dde3ea;
+}
+
+.btn-secondary:hover {
+    background: #eef2f7;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #5482b8;
+    border-color: #5482b8;
+}
+
+.btn-outline:hover {
+    background: #5482b8;
+    color: #fff;
+}
+
+.btn-danger {
+    background: #c0392b;
+    color: #fff;
+    border-color: #c0392b;
+}
+
+.btn-danger:hover {
+    background: #a93226;
+    border-color: #a93226;
+}
+
+/* Button grootte-varianten */
+.btn-sm {
+    padding: 5px 11px;
+    font-size: 13px;
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ===== Card — herbruikbare content container ===== */
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #dde3ea;
+    padding: 28px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #1c2b3a;
+}
+
+/* ===== Badge — rol- en statuslabels ===== */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
+/* Kleurvarianten per gebruikersrol */
+.badge--admin {
+    background: #d6eaf8;
+    color: #1a5276;
+}
+
+.badge--trainer {
+    background: #d5f5e3;
+    color: #1e8449;
+}
+
+.badge--vrijwilliger {
+    background: #fdebd0;
+    color: #784212;
+}
+
+/* Statusbadges voor workshop-overzicht */
+.badge--gepland {
+    background: #d6eaf8;
+    color: #1a5276;
+}
+
+.badge--afgerond {
+    background: #d5f5e3;
+    color: #1e8449;
+}
+
+/* Primaire badge voor workshop-categorieen */
+.badge-primary {
+    background: rgba(84, 130, 184, 0.12);
+    color: #5482b8;
+}
+
+/* ===== Filter bar — zoek- en filteropties ===== */
+.filter-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #ffffff;
+    border: 1px solid #dde3ea;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7c93;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+/* ===== Table — data-overzichten ===== */
+
+/* Wrapper met horizontale scroll voor smalle schermen */
+.table-wrapper {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #dde3ea;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table th {
+    background: #f4f6f9;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7c93;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #dde3ea;
+    cursor: pointer;
+    user-select: none;
+}
+
+.data-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #dde3ea;
+    color: #1c2b3a;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Actieknoppen in een tabelrij */
+.table-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ===== Empty state — lege pagina placeholder ===== */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: #6b7c93;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #dde3ea;
+}
+
+.empty-state h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #1c2b3a;
+}
+
+.empty-state p {
+    font-size: 15px;
+    margin-bottom: 16px;
+}

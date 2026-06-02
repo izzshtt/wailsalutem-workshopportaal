@@ -1,0 +1,109 @@
+{% extends 'admin_base.html' %}
+{% block title %}Gebruikers — WailSalutem{% endblock %}
+{% block admin_icon %}👥{% endblock %}
+{% block admin_title %}Gebruikers{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>Gebruikers</h1>
+  <div class="filter-actions">
+    <a href="{{ url_for('gebruikers.nieuw') }}" class="btn btn-primary">+ Gebruiker toevoegen</a>
+  </div>
+</header>
+
+<!-- US-09: zoeken en filteren -->
+<section class="card" style="padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+  <form method="GET" action="{{ url_for('gebruikers.overzicht') }}">
+    <div class="form-row form-row--2col">
+      <div class="form-group">
+        <label for="zoek">Zoeken op naam of e-mail</label>
+        <input
+          type="text"
+          id="zoek"
+          name="zoek"
+          class="form-control"
+          placeholder="Bijv. Jan of jan@..."
+          value="{{ zoekterm }}">
+      </div>
+      <div class="form-group">
+        <label for="rol">Filteren op rol</label>
+        <select id="rol" name="rol" class="form-control">
+          <option value="">— Alle rollen —</option>
+          <option value="admin"
+            {% if huidige_rol == 'admin' %}selected{% endif %}>
+            Admin
+          </option>
+          <option value="trainer"
+            {% if huidige_rol == 'trainer' %}selected{% endif %}>
+            Trainer
+          </option>
+          <option value="vrijwilliger"
+            {% if huidige_rol == 'vrijwilliger' %}selected{% endif %}>
+            Vrijwilliger
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Zoeken</button>
+      <a href="{{ url_for('gebruikers.overzicht') }}" class="btn btn-outline">Reset</a>
+    </div>
+  </form>
+</section>
+
+{% if gebruikers %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>E-mailadres</th>
+        <th>Rol</th>
+        <th>Acties</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gebruiker in gebruikers %}
+      <tr>
+        <td>{{ gebruiker.name }}</td>
+        <td>{{ gebruiker.email }}</td>
+        <td>
+          <span class="badge badge-{{ gebruiker.rol }}">
+            {{ gebruiker.rol|capitalize }}
+          </span>
+        </td>
+        <td class="table-actions">
+          <a href="{{ url_for('gebruikers.bewerken', gebruiker_id=gebruiker.id) }}"
+            class="btn btn-sm btn-outline">Bewerken</a>
+
+          {% if gebruiker.id != current_user.id %}
+            {% if current_user.is_admin or gebruiker.rol != 'admin' %}
+            <form
+              method="POST"
+              action="{{ url_for('gebruikers.verwijderen', gebruiker_id=gebruiker.id) }}"
+              class="d-inline"
+              onsubmit="return confirm('Weet je zeker dat je {{ gebruiker.name }} wilt verwijderen?')">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="btn btn-sm btn-danger">Verwijderen</button>
+            </form>
+            {% endif %}
+          {% endif %}
+
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<section class="empty-state">
+  {% if zoekterm or huidige_rol %}
+  <p>Geen gebruikers gevonden voor deze zoekopdracht.</p>
+  <a href="{{ url_for('gebruikers.overzicht') }}" class="btn btn-outline">Toon alle gebruikers</a>
+  {% else %}
+  <p>Er zijn nog geen gebruikers geregistreerd.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% endblock %}

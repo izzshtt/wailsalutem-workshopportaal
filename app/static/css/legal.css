@@ -1,0 +1,41 @@
+/* ===== Legal pages — privacy en voorwaarden ===== */
+
+.legal-content {
+    max-width: 800px;
+}
+
+.legal-content h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c2b3a;
+    margin-top: 28px;
+    margin-bottom: 12px;
+}
+
+.legal-content p,
+.legal-content ul,
+.legal-content li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #6b7c93;
+}
+
+.legal-content ul {
+    padding-left: 24px;
+    margin-bottom: 12px;
+}
+
+.legal-content li {
+    margin-bottom: 6px;
+}
+
+.legal-content a {
+    color: #5482b8;
+}
+
+.legal-update {
+    font-size: 13px;
+    color: #6b7c93;
+    font-style: italic;
+    margin-bottom: 20px;
+}

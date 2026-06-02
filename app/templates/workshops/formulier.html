@@ -1,0 +1,369 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+  {{ titel }} — WailSalutem
+{% endblock %}
+{% block admin_icon %}🎓{% endblock %}
+{% block admin_title %}Workshops{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>{{ titel }}</h1>
+  <a href="{{ url_for('workshops.overzicht') }}"
+    class="btn btn-outline">
+    &larr; Terug
+  </a>
+</header>
+
+<section class="card form-card">
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+
+    <!-- Sectie 1: Algemeen -->
+    <h3 class="formulier-sectie-titel">Algemeen</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.naam.label }}
+        {{ form.naam(
+          class="form-control",
+          placeholder="Bijv. AI-Robotica") }}
+        {% for error in form.naam.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.beschrijving.label }}
+        {{ form.beschrijving(
+          class="form-control",
+          rows="3",
+          placeholder="Korte beschrijving van de workshop") }}
+        {% for error in form.beschrijving.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sectie 2: Planning -->
+    <h3 class="formulier-sectie-titel">Planning</h3>
+
+    <div class="form-row form-row--2col">
+      <div class="form-group">
+        {{ form.datum.label }}
+        {{ form.datum(class="form-control") }}
+        {% for error in form.datum.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.tijdstip.label }}
+        {{ form.tijdstip(class="form-control") }}
+        {% for error in form.tijdstip.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row form-row--2col">
+      <div class="form-group">
+        {{ form.eindtijd.label }}
+        {{ form.eindtijd(class="form-control") }}
+        {% for error in form.eindtijd.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.duur.label }}
+        {{ form.duur(
+          class="form-control",
+          placeholder="60") }}
+        {% for error in form.duur.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sectie 3: Locatie -->
+    <h3 class="formulier-sectie-titel">Locatie</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="adres-zoek">Locatie zoeken</label>
+        <div class="adres-zoek-wrapper">
+          <input
+            type="text"
+            id="adres-zoek"
+            class="form-control"
+            placeholder="Zoek een adres of locatienaam"
+            autocomplete="off"
+            value="{{ form.locatie.data or '' }}"
+          >
+          <ul id="adres-suggesties" class="adres-suggesties" hidden></ul>
+        </div>
+        <span class="form-hint">Selecteer een resultaat om het adres en de coördinaten automatisch in te vullen</span>
+        {% for error in form.locatie.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    {{ form.locatie(type="hidden") }}
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.school.label }}
+        {{ form.school(
+          class="form-control",
+          placeholder="Naam van de school") }}
+        {% for error in form.school.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    {{ form.latitude(type="hidden") }}
+    {{ form.longitude(type="hidden") }}
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Trainer <span class="form-hint">(optioneel — standaard: admin)</span></label>
+        <select name="trainer_id" class="form-control">
+          <option value="">— Geen trainer geselecteerd —</option>
+          {% for trainer in trainers %}
+          <option value="{{ trainer.id }}" {% if geselecteerde_trainer_id == trainer.id %}selected{% endif %}>{{ trainer.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- Sectie 4: Deelnemers -->
+    <h3 class="formulier-sectie-titel">Deelnemers</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.aantal_deelnemers.label }}
+        {{ form.aantal_deelnemers(
+          class="form-control",
+          placeholder="Bijv. 25") }}
+        <span class="form-hint">Het werkelijke aantal kinderen dat heeft deelgenomen</span>
+        {% for error in form.aantal_deelnemers.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-row form-row--2col">
+      <div class="form-group">
+        {{ form.leeftijd_min.label }}
+        {{ form.leeftijd_min(
+          class="form-control",
+          placeholder="Bijv. 8") }}
+        {% for error in form.leeftijd_min.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.leeftijd_max.label }}
+        {{ form.leeftijd_max(
+          class="form-control",
+          placeholder="Bijv. 14") }}
+        {% for error in form.leeftijd_max.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sectie 5: Leeruitkomsten -->
+    <h3 class="formulier-sectie-titel">Leeruitkomsten</h3>
+    <p class="form-hint">Selecteer de leeruitkomsten die bij deze workshop horen.</p>
+
+    {% for groep in leeruitkomsten_groepen %}
+    <fieldset class="leeruitkomsten-groep">
+      <legend class="leeruitkomsten-groep__titel">{{ groep.label }}</legend>
+      <div class="leeruitkomsten-groep__items">
+        {% for uitkomst in groep.uitkomsten %}
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            name="leeruitkomsten"
+            value="{{ uitkomst }}"
+            {% if uitkomst in geselecteerde_leeruitkomsten %}checked{% endif %}
+          >
+          {{ uitkomst }}
+        </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    {% endfor %}
+
+    <div class="form-actions">
+      {{ form.submit(class="btn btn-primary") }}
+      <a href="{{ url_for('workshops.overzicht') }}"
+        class="btn btn-outline">
+        Annuleren
+      </a>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .adres-zoek-wrapper {
+    position: relative;
+  }
+  .adres-suggesties {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1.5px solid #6e9ace;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 100;
+    max-height: 220px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .adres-suggesties li {
+    padding: 9px 12px;
+    font-size: 13px;
+    color: #1c2b3a;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f3f6;
+  }
+  .adres-suggesties li:last-child {
+    border-bottom: none;
+  }
+  .adres-suggesties li:hover,
+  .adres-suggesties li.is-actief {
+    background: #f0f6ff;
+  }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var zoekInput = document.getElementById('adres-zoek');
+  var suggestiesLijst = document.getElementById('adres-suggesties');
+  var latInput = document.getElementById('latitude');
+  var lngInput = document.getElementById('longitude');
+  var locatieInput = document.getElementById('locatie');
+  var debounceTimer = null;
+  var actieveIndex = -1;
+  var huidigeResultaten = [];
+
+  if (!zoekInput) return;
+
+  zoekInput.addEventListener('input', function () {
+    clearTimeout(debounceTimer);
+    var waarde = zoekInput.value.trim();
+    if (waarde.length < 3) {
+      verbergSuggesties();
+      return;
+    }
+    debounceTimer = setTimeout(function () {
+      zoekAdres(waarde);
+    }, 350);
+  });
+
+  zoekInput.addEventListener('keydown', function (e) {
+    var items = suggestiesLijst.querySelectorAll('li');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      actieveIndex = Math.min(actieveIndex + 1, items.length - 1);
+      updateActief(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      actieveIndex = Math.max(actieveIndex - 1, 0);
+      updateActief(items);
+    } else if (e.key === 'Enter' && actieveIndex >= 0) {
+      e.preventDefault();
+      kiesResultaat(huidigeResultaten[actieveIndex]);
+    } else if (e.key === 'Escape') {
+      verbergSuggesties();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!zoekInput.contains(e.target) && !suggestiesLijst.contains(e.target)) {
+      verbergSuggesties();
+    }
+  });
+
+  function zoekAdres(q) {
+    var url = 'https://nominatim.openstreetmap.org/search'
+      + '?format=json&addressdetails=1&limit=6&countrycodes=nl&q='
+      + encodeURIComponent(q);
+    fetch(url, { headers: { 'Accept-Language': 'nl' } })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        huidigeResultaten = data;
+        toonSuggesties(data);
+      })
+      .catch(function () { verbergSuggesties(); });
+  }
+
+  function kortLabel(r) {
+    var a = r.address || {};
+    var delen = [];
+    if (r.name) delen.push(r.name);
+    if (a.road) delen.push(a.house_number ? a.road + ' ' + a.house_number : a.road);
+    if (a.city || a.town || a.village) delen.push(a.city || a.town || a.village);
+    return delen.length ? delen.join(', ') : r.display_name.split(',').slice(0, 2).join(',').trim();
+  }
+
+  function toonSuggesties(resultaten) {
+    suggestiesLijst.innerHTML = '';
+    actieveIndex = -1;
+    if (!resultaten.length) {
+      var li = document.createElement('li');
+      li.textContent = 'Geen resultaten gevonden';
+      li.style.color = '#6b7c93';
+      li.style.cursor = 'default';
+      suggestiesLijst.appendChild(li);
+      suggestiesLijst.hidden = false;
+      return;
+    }
+    resultaten.forEach(function (r) {
+      var li = document.createElement('li');
+      li.textContent = kortLabel(r);
+      li.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        kiesResultaat(r);
+      });
+      suggestiesLijst.appendChild(li);
+    });
+    suggestiesLijst.hidden = false;
+  }
+
+  function kiesResultaat(r) {
+    var label = kortLabel(r);
+    zoekInput.value = label;
+    if (locatieInput) locatieInput.value = label;
+    latInput.value = parseFloat(r.lat).toFixed(6);
+    lngInput.value = parseFloat(r.lon).toFixed(6);
+    verbergSuggesties();
+  }
+
+  function verbergSuggesties() {
+    suggestiesLijst.hidden = true;
+    suggestiesLijst.innerHTML = '';
+    actieveIndex = -1;
+  }
+
+  function updateActief(items) {
+    items.forEach(function (el, i) {
+      el.classList.toggle('is-actief', i === actieveIndex);
+    });
+  }
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Registreren — WailSalutem{% endblock %}
+
+{% block content %}
+<section class="login-wrapper">
+  <section class="card login-card">
+    <div class="login-logo">
+      <img
+        src="{{ url_for('static', filename='images/logo.png') }}"
+        alt="Wail Salutem"
+        class="login-logo-img">
+      <p class="login-subtitle">Workshopportaal</p>
+    </div>
+    <h1 class="card-title">Account aanmaken</h1>
+    <form method="POST"
+      action="{{ url_for('login.registreren') }}"
+      novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.naam.label }}
+        {{ form.naam(
+          class="form-control",
+          placeholder="Voornaam en achternaam") }}
+        {% for error in form.naam.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email(
+          class="form-control",
+          placeholder="naam@domein.nl",
+          autocomplete="email") }}
+        {% for error in form.email.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password(
+          class="form-control",
+          placeholder="Minimaal 6 tekens",
+          autocomplete="new-password") }}
+        {% for error in form.password.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.password2.label }}
+        {{ form.password2(
+          class="form-control",
+          placeholder="Herhaal wachtwoord",
+          autocomplete="new-password") }}
+        {% for error in form.password2.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-actions">
+        {{ form.submit(class="btn btn-primary btn-block") }}
+      </div>
+    </form>
+    <p class="login-register-link">
+      Al een account?
+      <a href="{{ url_for('login.login') }}">Inloggen</a>
+    </p>
+  </section>
+</section>
+{% endblock %}

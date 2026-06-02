@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ workshop.naam }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      <td class="fitwidth">Datum</td>
+      <td>{{ workshop.datum }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">Tijdstip</td>
+      <td>{{ workshop.tijdstip }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">Locatie</td>
+      <td>{{ workshop.locatie }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">School</td>
+      <td>{{ workshop.school }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">Trainer</td>
+      <td>{{ workshop.trainer_naam }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">Deelnemers</td>
+      <td>{{ workshop.aantal_deelnemers_label }}</td>
+    </tr>
+    <tr>
+      <td class="fitwidth">Duur</td>
+      <td>{{ workshop.duur_label }}</td>
+    </tr>
+  </table>
+
+  <p>
+    <a href="{{ url_for('workshops.overzicht') }}"
+      class="btn btn-outline">
+      Terug naar overzicht
+    </a>
+    {% if workshop.mag_bewerken %}
+      <a href="{{ workshop.bewerken_url }}"
+        class="btn btn-primary">
+        Bewerken
+      </a>
+    {% endif %}
+  </p>
+{% endblock %}

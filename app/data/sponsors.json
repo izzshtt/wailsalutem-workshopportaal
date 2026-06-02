@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "naam": "Dock",
+    "website_url": "https://www.dock.nl",
+    "logo_bestandsnaam": "partner_dock.jpg"
+  },
+  {
+    "id": 2,
+    "naam": "Stadsfonds Amstelveen",
+    "website_url": "https://stadsfondsamstelveen.nl",
+    "logo_bestandsnaam": "partner_stadsfonds.png"
+  },
+  {
+    "id": 3,
+    "naam": "Technasium",
+    "website_url": "https://www.technasium.nl",
+    "logo_bestandsnaam": "partner_technasium.png"
+  },
+  {
+    "id": 4,
+    "naam": "Ondernemersvereniging Amstelveen",
+    "website_url": "https://oa-amstelveen.nl",
+    "logo_bestandsnaam": "partner_oa_amstelveen.png"
+  },
+  {
+    "id": 5,
+    "naam": "Elan",
+    "website_url": "",
+    "logo_bestandsnaam": "partner_elan.webp"
+  },
+  {
+    "id": 6,
+    "naam": "Rabobank Amstel en Vecht",
+    "website_url": "https://www.rabobank.nl/lokale-bank/amstel-en-vecht",
+    "logo_bestandsnaam": "partner_rabobank.png"
+  },
+  {
+    "id": 7,
+    "naam": "GSES",
+    "website_url": "https://gses-system.com",
+    "logo_bestandsnaam": "partner_gses.svg"
+  },
+  {
+    "id": 8,
+    "naam": "Stichting De Solidariteit",
+    "website_url": "https://desolidariteit.nl",
+    "logo_bestandsnaam": "partner_solidariteit.png"
+  },
+  {
+    "id": 9,
+    "naam": "OBA",
+    "website_url": "https://oba.nl",
+    "logo_bestandsnaam": "partner_oba.png"
+  },
+  {
+    "id": 10,
+    "naam": "Gemeente Amstelveen",
+    "website_url": "https://www.amstelveen.nl",
+    "logo_bestandsnaam": "partner_gemeente_amstelveen.png"
+  },
+  {
+    "id": 11,
+    "naam": "Kinderpostzegels",
+    "website_url": "https://kinderpostzegels.nl",
+    "logo_bestandsnaam": "partner_kinderpostzegels.png"
+  },
+  {
+    "id": 12,
+    "naam": "Platform Talent voor Technologie",
+    "website_url": "https://www.ptvt.nl",
+    "logo_bestandsnaam": "partner_ptvt.svg"
+  },
+  {
+    "id": 13,
+    "naam": "EU Code Week",
+    "website_url": "https://codeweek.eu",
+    "logo_bestandsnaam": "partner_codeweek.svg"
+  },
+  {
+    "id": 14,
+    "naam": "Makeblock Education",
+    "website_url": "https://www.makeblock.com",
+    "logo_bestandsnaam": "partner_makeblock.jpg"
+  }
+]

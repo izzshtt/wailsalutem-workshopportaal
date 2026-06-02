@@ -1,0 +1,42 @@
+/* WailSalutem Workshopportaal — basisstijlen */
+/* Reset, typografie en layout */
+
+/* Reset — border-box op alles, geen default marges */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Basis typografie en pagina-layout (flexbox kolom) */
+body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1c2b3a;
+    background: #f4f6f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gecentreerde container met max-breedte */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== Main content — vult resterende ruimte ===== */
+.site-main {
+    flex: 1;
+    padding: 32px 0;
+}
+
+/* ===== Utility — herbruikbare hulpklassen ===== */
+.mb-28 { margin-bottom: 28px; }
+.mt-16 { margin-top: 16px; }
+.d-inline { display: inline; }
+.no-border { border: none; box-shadow: none; }
+.text-muted { color: #6b7c93; }
+.text-sm { font-size: 0.875rem; }

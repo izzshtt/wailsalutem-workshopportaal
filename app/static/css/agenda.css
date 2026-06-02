@@ -1,0 +1,91 @@
+/* ===== Agenda pagina ===== */
+
+.agenda-kaart {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+}
+
+.agenda-kaart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.agenda-datum {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.agenda-naam {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+}
+
+.agenda-info-rij {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.agenda-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.agenda-info-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+}
+
+.agenda-info-waarde {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.agenda-detail-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e7db5;
+    text-decoration: none;
+}
+
+.agenda-detail-link:hover {
+    text-decoration: underline;
+}
+
+.badge-gepland {
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-afgerond {
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.agenda-leeg {
+    color: #9ca3af;
+    font-size: 14px;
+    padding: 20px 0;
+}
