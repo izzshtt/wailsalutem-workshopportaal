@@ -76,8 +76,8 @@ Stoppen doe je met `Ctrl + C`, daarna `docker compose down`.
 
 ```bash
 # 1. Project binnenhalen
-git clone <github-repo-url>
-cd faaciiweedee14
+git clone https://github.com/izzshtt/wailsalutem-workshopportaal.git
+cd wailsalutem-workshopportaal
 
 # 2. Virtuele omgeving aanmaken en activeren
 python -m venv .venv
